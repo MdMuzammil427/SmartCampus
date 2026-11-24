@@ -1,0 +1,22 @@
+{% extends "base.html" %}{% block content %}
+<h4 class="mb-3">Admin Dashboard</h4>
+<div class="row g-3 mb-4">
+ <div class="col-6 col-lg"><div class="card card-stat p-3"><small>Students</small><h2>{{ students }}</h2></div></div>
+ <div class="col-6 col-lg"><div class="card card-stat p-3"><small>Total Complaints</small><h2>{{ stats.total }}</h2></div></div>
+ <div class="col-6 col-lg"><div class="card card-stat p-3"><small>Pending</small><h2 class="text-warning">{{ stats.pending }}</h2></div></div>
+ <div class="col-6 col-lg"><div class="card card-stat p-3"><small>In Progress</small><h2 class="text-primary">{{ stats.in_progress }}</h2></div></div>
+ <div class="col-6 col-lg"><div class="card card-stat p-3"><small>Resolved</small><h2 class="text-success">{{ stats.resolved }}</h2></div></div>
+</div>
+<div class="row g-3">
+ <div class="col-lg-5"><div class="panel"><h5>Complaint Statistics</h5><canvas id="chart"></canvas></div></div>
+ <div class="col-lg-7"><div class="panel"><h5>Recent Complaints</h5>
+  <table class="table"><thead><tr><th>Student</th><th>Title</th><th>Status</th></tr></thead><tbody>
+  {% for c in recent %}<tr><td>{{ c.student }}</td><td>{{ c.title }}</td><td>{{ c.status }}</td></tr>
+  {% else %}<tr><td colspan="3" class="text-muted">No complaints yet.</td></tr>{% endfor %}</tbody></table>
+  <a href="{{ url_for('manage_complaints') }}">Manage all →</a></div></div>
+</div>{% endblock %}
+{% block scripts %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
+<script>new Chart(document.getElementById('chart'),{type:'doughnut',data:{labels:{{ statuses|tojson }},
+datasets:[{data:{{ counts|tojson }},backgroundColor:['#94a3b8','#0ea5e9','#f59e0b','#22c55e','#ef4444']}]}});</script>
+{% endblock %}

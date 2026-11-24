@@ -1,0 +1,13 @@
+{% extends "base.html" %}{% block content %}
+<h4 class="mb-3">Announcements</h4>
+{% if session.role == 'admin' %}
+<div class="panel mb-4"><h5>Publish Announcement</h5>
+<form method="post"><input name="title" class="form-control mb-2" placeholder="Title" required>
+<textarea name="description" rows="3" class="form-control mb-2" placeholder="Description" required></textarea>
+<button class="btn btn-primary">Publish</button></form></div>
+{% endif %}
+{% for a in rows %}<div class="panel mb-3 d-flex justify-content-between">
+ <div><h6 class="mb-0">{{ a.title }}</h6><small class="text-muted">{{ a.created_at.strftime('%d %b %Y, %H:%M') }}</small><p class="mb-0 mt-2">{{ a.description }}</p></div>
+ {% if session.role == 'admin' %}<form method="post" action="{{ url_for('delete_announcement', aid=a.id) }}" data-confirm="Delete this announcement?">
+ <button class="btn btn-sm btn-outline-danger">Delete</button></form>{% endif %}
+</div>{% else %}<p class="text-muted">No announcements yet.</p>{% endfor %}{% endblock %}

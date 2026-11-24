@@ -1,0 +1,7 @@
+{% extends "base.html" %}{% block content %}
+<div class="panel" style="max-width:600px"><h5>My Profile</h5>
+<table class="table mb-0">
+<tr><th>Name</th><td>{{ s.name }}</td></tr><tr><th>Email</th><td>{{ s.email }}</td></tr>
+<tr><th>Roll No</th><td>{{ s.roll_no }}</td></tr><tr><th>Department</th><td>{{ s.department }}</td></tr>
+<tr><th>Phone</th><td>{{ s.phone or '-' }}</td></tr><tr><th>Joined</th><td>{{ s.created_at.strftime('%d %b %Y') }}</td></tr>
+</table></div>{% endblock %}

@@ -1,0 +1,5 @@
+{% extends "base.html" %}{% block content %}
+<h4 class="mb-3">Registered Students</h4>
+<div class="panel table-responsive"><table class="table"><thead><tr><th>Name</th><th>Roll No</th><th>Email</th><th>Department</th><th>Phone</th><th>Complaints</th></tr></thead><tbody>
+{% for s in rows %}<tr><td>{{ s.name }}</td><td>{{ s.roll_no }}</td><td>{{ s.email }}</td><td>{{ s.department }}</td><td>{{ s.phone or '-' }}</td><td>{{ s.complaints }}</td></tr>
+{% else %}<tr><td colspan="6" class="text-muted text-center">No students yet.</td></tr>{% endfor %}</tbody></table></div>{% endblock %}

@@ -1,0 +1,21 @@
+{% extends "base.html" %}{% block content %}
+<h4 class="mb-3">Manage Complaints</h4>
+<form class="row g-2 mb-3" method="get">
+ <div class="col-md-4"><input name="q" value="{{ search }}" class="form-control" placeholder="Search title, student, roll no"></div>
+ <div class="col-md-3"><select name="status" class="form-select"><option value="">All statuses</option>
+  {% for s in statuses %}<option {{ 'selected' if s==status }}>{{ s }}</option>{% endfor %}</select></div>
+ <div class="col-md-3"><select name="category" class="form-select"><option value="">All categories</option>
+  {% for c in categories %}<option {{ 'selected' if c==cat }}>{{ c }}</option>{% endfor %}</select></div>
+ <div class="col-md-2"><button class="btn btn-primary w-100">Filter</button></div>
+</form>
+<div class="panel table-responsive"><table class="table align-middle">
+<thead><tr><th>#</th><th>Student</th><th>Complaint</th><th>Category</th><th>Status / Department</th></tr></thead><tbody>
+{% for c in rows %}<tr><td>{{ c.id }}</td><td>{{ c.student }}<br><small>{{ c.roll_no }}</small></td>
+<td><strong>{{ c.title }}</strong>{% if c.image %} <a href="{{ url_for('static', filename='uploads/' ~ c.image) }}" target="_blank">📎</a>{% endif %}<br><small>{{ c.description }}</small></td>
+<td>{{ c.category }}</td>
+<td><form method="post" action="{{ url_for('update_complaint', cid=c.id) }}" class="d-flex gap-1 flex-wrap">
+ <select name="status" class="form-select form-select-sm w-auto">{% for s in statuses %}<option {{ 'selected' if s==c.status }}>{{ s }}</option>{% endfor %}</select>
+ <select name="department" class="form-select form-select-sm w-auto"><option value="">-- Dept --</option>{% for d in departments %}<option {{ 'selected' if d==c.department }}>{{ d }}</option>{% endfor %}</select>
+ <button class="btn btn-sm btn-success">Save</button></form></td></tr>
+{% else %}<tr><td colspan="5" class="text-center text-muted">No complaints found.</td></tr>{% endfor %}
+</tbody></table></div>{% endblock %}

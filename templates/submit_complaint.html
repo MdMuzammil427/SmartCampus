@@ -1,0 +1,11 @@
+{% extends "base.html" %}{% block content %}
+<div class="panel" style="max-width:700px"><h5>Submit a Complaint</h5>
+<form method="post" enctype="multipart/form-data">
+ <label class="form-label">Category</label>
+ <select name="category" class="form-select mb-3" required>{% for c in categories %}<option>{{ c }}</option>{% endfor %}</select>
+ <label class="form-label">Title</label><input name="title" class="form-control mb-3" maxlength="150" required>
+ <label class="form-label">Description</label><textarea name="description" rows="5" class="form-control mb-3" required></textarea>
+ <label class="form-label">Image (optional, PNG/JPG/GIF, max 2 MB)</label>
+ <input type="file" name="image" accept=".png,.jpg,.jpeg,.gif" class="form-control mb-3">
+ <button class="btn btn-primary">Submit</button>
+</form></div>{% endblock %}
